@@ -30,7 +30,7 @@
             android:fontFamily="sans-serif-medium"
             android:gravity="center_horizontal"
             android:lineSpacingExtra="8sp"
-            android:text="EventBox"
+            android:text="@string/eventbox"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="#000000"
@@ -48,7 +48,7 @@
             android:alpha="1"
             android:background="@drawable/rounded_box"
             android:fontFamily="sans-serif-medium"
-            android:hint="example@email.com"
+            android:hint="@string/example_email_com"
             android:padding="10dp"
             android:textColor="#303030"
             android:textStyle="italic"
@@ -64,7 +64,7 @@
             android:alpha="1"
             android:background="@drawable/rounded_box"
             android:fontFamily="sans-serif-medium"
-            android:hint="Your password"
+            android:hint="@string/your_password"
             android:inputType="textPassword"
             android:padding="10dp"
             android:textColor="#303030"
@@ -80,7 +80,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             android:padding="10dp"
-            android:text="Login"
+            android:text="@string/login"
             android:translationY="0dp"
             android:background="@drawable/button_shape" />
 
@@ -94,7 +94,7 @@
             android:layout_marginBottom="16dp"
             android:fontFamily="sans-serif-medium"
             android:gravity="start"
-            android:text="Remind me"
+            android:text="@string/remind_me"
             android:textAlignment="textStart"
             android:textSize="16sp"
             android:translationY="0dp" />
@@ -102,7 +102,7 @@
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
-            android:text="Don't have an account yet?"
+            android:text="@string/don_t_have_an_account_yet"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
@@ -114,7 +114,7 @@
             />
 
         <Button
-            android:id="@+id/buttonLogin3"
+            android:id="@+id/buttonSignUp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="16dp"
@@ -125,7 +125,7 @@
             android:backgroundTint="@color/light_grey"
             android:backgroundTintMode="src_atop"
             android:padding="10dp"
-            android:text="Sign up"
+            android:text="@string/sign_up"
             android:translationY="0dp" />
 
     </LinearLayout>

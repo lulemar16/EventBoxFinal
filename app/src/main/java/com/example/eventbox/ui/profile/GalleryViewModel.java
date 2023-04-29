@@ -1,4 +1,4 @@
-package com.example.eventbox.ui.gallery;
+package com.example.eventbox.ui.profile;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

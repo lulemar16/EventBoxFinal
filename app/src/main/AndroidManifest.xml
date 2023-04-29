@@ -12,6 +12,9 @@
         android:theme="@style/Theme.EventBox"
         tools:targetApi="31">
         <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <activity
             android:name=".HomeSideBar"
             android:exported="false"
             android:label="@string/title_activity_home_side_bar"

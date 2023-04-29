@@ -11,10 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceFragmentCompat;
 
 import com.example.eventbox.R;
 import com.example.eventbox.databinding.SettingsFragmentBinding;
 
+/*
 public class SettingsFragment extends Fragment {
 
     private SettingsFragmentBinding binding;
@@ -44,3 +46,13 @@ public class SettingsFragment extends Fragment {
         binding = null;
     }
 }
+*/
+
+public class SettingsFragment extends PreferenceFragmentCompat {
+
+    @Override
+    public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+        setPreferencesFromResource(R.xml.root_preferences, rootKey);
+    }
+}
+
