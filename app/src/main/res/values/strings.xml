@@ -53,5 +53,8 @@
     <string name="menu_logout">Logout</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_plan_event">Before</string>
+    <string name="title_take_picture">During</string>
+    <string name="title_view_events">After</string>
 
 </resources>

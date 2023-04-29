@@ -1,77 +1,80 @@
 package com.example.eventbox.ui.home;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
-import com.example.eventbox.HomeSideBar;
-import com.example.eventbox.PlanEventFragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
 import com.example.eventbox.R;
-import com.example.eventbox.databinding.FragmentHomeBinding;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
-
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-        // setupFragments();
-        return root;
-    }
+    private ViewPager viewPager;
+    private TabLayout tabLayout;
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
+        viewPager = rootView.findViewById(R.id.view_pager);
+        tabLayout = rootView.findViewById(R.id.tabs);
+
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
+
+        return rootView;
     }
-    /*private void setupFragments() {
-        // Create your fragments
-        PlanEventFragment planEventFragment = new PlanEventFragment();
-//        TakePictureFragment takePictureFragment = new TakePictureFragment();
-//        ViewEventsFragment viewEventsFragment = new ViewEventsFragment();
 
-        // Get a reference to the bottom navigation view
-        BottomNavigationView navigationView = findViewById(R.id.navigationView);
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
+        adapter.addFragment(new BeforeFragment(), "Before");
+        adapter.addFragment(new DuringFragment(), "During");
+        adapter.addFragment(new AfterFragment(), "After");
+        viewPager.setAdapter(adapter);
+    }
 
-        // Set up a listener for bottom navigation view item selection
-        navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                // Handle item selection
-                switch (item.getItemId()) {
-                    case R.id.navigation_plan_event:
-                        // Show the PlanEventFragment
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, planEventFragment).commit();
-                        return true;
-//                    case R.id.navigation_take_picture:
-//                        // Show the TakePictureFragment
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, takePictureFragment).commit();
-//                        return true;
-//                    case R.id.navigation_view_events:
-//                        // Show the ViewEventsFragment
-//                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, viewEventsFragment).commit();
-//                        return true;
-                }
-                return false;
-            }
-        });
+    private static class ViewPagerAdapter extends FragmentPagerAdapter {
 
-        // Set the default fragment to display (in this case, the PlanEventFragment)
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, planEventFragment).commit();
-    }*/
+        private final FragmentManager fragmentManager;
+        private final List<Fragment> fragmentList = new ArrayList<>();
+        private final List<String> fragmentTitleList = new ArrayList<>();
 
+        public ViewPagerAdapter(@NonNull FragmentManager fm) {
+            super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+            fragmentManager = fm;
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            fragmentList.add(fragment);
+            fragmentTitleList.add(title);
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return fragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentList.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return fragmentTitleList.get(position);
+        }
+    }
 }
+
