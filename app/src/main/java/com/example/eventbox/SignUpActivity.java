@@ -6,8 +6,14 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class SignUpActivity extends AppCompatActivity {
+
+    Button signUpButton;
+    EditText et_name, et_email, et_password;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,11 +28,29 @@ public class SignUpActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_sign_up);
 
-        Button signUpButton = findViewById(R.id.buttonSignUp);
+        signUpButton = findViewById(R.id.buttonSignUp);
+        et_name = findViewById(R.id.username);
+        et_email = findViewById(R.id.email);
+        et_password = findViewById(R.id.password);
+
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Perform sign-up logic here
+
+                UserModel userModel;
+
+                try {
+                    userModel = new UserModel(-1, et_name.getText().toString(), et_email.getText().toString(), et_password.getText().toString());
+                }
+                catch (Exception e) {
+                    userModel = new UserModel(-1, "error", "error", "error");
+
+                }
+
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(SignUpActivity.this);
+
+                boolean success = dataBaseHelper.addOne(userModel);
+                Toast.makeText(SignUpActivity.this, "Success=" + success, Toast.LENGTH_SHORT).show();
             }
         });
     }

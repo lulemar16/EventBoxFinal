@@ -8,8 +8,12 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Toast;
+import com.example.eventbox.DataBaseHelper;
 
 import android.os.Bundle;
+
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private EditText editTextUsername;
@@ -47,12 +51,19 @@ public class MainActivity extends AppCompatActivity {
                 String username = editTextUsername.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
 
-                if (username.equals("admin") && password.equals("password")) {
-                    Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                    launchNewActivity();
-                } else {
-                    Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
+                List<UserModel> dbUsers = dataBaseHelper.getEveryone();
+
+                for (UserModel user : dbUsers) {
+                    if (user.getName().equals(username) && user.getPassword().equals(password)) {
+                        // credentials are correct, do something
+                        Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                        launchNewActivity();
+                    }else {
+                        Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
             }
         });
 
