@@ -49,7 +49,7 @@ public class SignUpActivity extends AppCompatActivity {
 
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(SignUpActivity.this);
 
-                boolean success = dataBaseHelper.addOne(userModel);
+                boolean success = dataBaseHelper.addOneUser(userModel);
                 Toast.makeText(SignUpActivity.this, "Success=" + success, Toast.LENGTH_SHORT).show();
             }
         });
