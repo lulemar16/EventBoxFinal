@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextPassword;
     private Button buttonLogin;
     private Button buttonSignUp;
+    private List<EventModel> dbEvents;
+    public static UserModel current_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +56,12 @@ public class MainActivity extends AppCompatActivity {
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
                 List<UserModel> dbUsers = dataBaseHelper.getEveryone();
                 dataBaseHelper.addInitialEvents();
-                List<EventModel> dbEvents = dataBaseHelper.getEvents();
+                dbEvents = dataBaseHelper.getEvents();
 
                 for (UserModel user : dbUsers) {
                     if (user.getName().equals(username) && user.getPassword().equals(password)) {
                         // credentials are correct, do something
+                        current_user = user;
                         Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                         launchNewActivity();
                     }else {
@@ -90,6 +93,14 @@ public class MainActivity extends AppCompatActivity {
     private void launchNewActivity() {
         Intent intent = new Intent(this, HomeSideBar.class);
         startActivity(intent);
+    }
+
+    public List<EventModel> getDbEvents() {
+        return dbEvents;
+    }
+
+    public static UserModel getCurrentUser(){
+        return current_user;
     }
 }
 
