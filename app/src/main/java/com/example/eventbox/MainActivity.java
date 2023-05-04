@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
                 List<UserModel> dbUsers = dataBaseHelper.getEveryone();
+                dataBaseHelper.addInitialEvents();
+                List<EventModel> dbEvents = dataBaseHelper.getEvents();
 
                 for (UserModel user : dbUsers) {
                     if (user.getName().equals(username) && user.getPassword().equals(password)) {
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
 
     }
 
