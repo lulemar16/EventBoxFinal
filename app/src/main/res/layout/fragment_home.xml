@@ -21,5 +21,10 @@
         android:layout_centerHorizontal="true"
         android:theme="@style/ThemeOverlay.MaterialComponents.Dark.ActionBar" />
 
+    <TextView
+        android:id="@+id/eventList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </TextView>
 
 </RelativeLayout>
