@@ -22,4 +22,15 @@
         android:name="com.example.eventbox.ui.settings.SettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/settings_fragment" />
+
+    <activity
+        android:id="@+id/buttonSignUp"
+        android:name="com.example.eventbox.MainActivity"
+        tools:layout="@layout/activity_main" />
+
+    <activity
+        android:id="@+id/nav_logout"
+        android:name="com.example.eventbox.MainActivity"
+        tools:layout="@layout/activity_main"
+        />
 </navigation>
