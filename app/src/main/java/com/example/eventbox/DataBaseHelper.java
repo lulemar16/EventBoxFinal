@@ -105,6 +105,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public int getNextIdEvents(){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // obtener el ID del último evento insertado
+        String query = "SELECT MAX(" + COLUMN_ID + ") FROM " + EVENT_TABLE;
+        Cursor cursor = db.rawQuery(query, null);
+        int maxId = 0;
+        if (cursor.moveToFirst()) {
+            maxId = cursor.getInt(0);
+        }
+        cursor.close();
+        return (maxId+1);
+    }
+
 
     public List<UserModel> getEveryone(){
 
@@ -174,4 +188,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return returnList;
     }
+
+    public void updateUserPassword(UserModel userModel, String newPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USER_PASSWORD, newPassword);
+        db.update(USER_TABLE, values, COLUMN_USER_NAME + " = ?", new String[] { userModel.getName() });
+        db.close();
+    }
+
+
 }

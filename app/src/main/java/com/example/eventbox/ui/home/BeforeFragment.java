@@ -4,47 +4,67 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.eventbox.DataBaseHelper;
+import com.example.eventbox.EventModel;
 import com.example.eventbox.R;
 
+import java.util.List;
+
 public class BeforeFragment extends Fragment {
+
+    ListView eventList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_before, container, false);
 
-        // Inflate the form layout
-        View formView = inflater.inflate(R.layout.fragment_before, container, false);
 
         // Find the EditText fields and Button in the form layout
-        EditText nameEditText = formView.findViewById(R.id.edit_text_name);
-        EditText emailEditText = formView.findViewById(R.id.edit_text_email);
-        Button submitButton = formView.findViewById(R.id.button_submit);
+        EditText eventNameEditText = rootView.findViewById(R.id.edit_text_event_name);
+        EditText eventDescEditText = rootView.findViewById(R.id.edit_text_event_description);
+        EditText eventDateEditText = rootView.findViewById(R.id.edit_text_event_date);
+        EditText eventPlaceEditText = rootView.findViewById(R.id.edit_text_event_place);
+        Button addButton = rootView.findViewById(R.id.button_add);
+
+        //eventList = rootView.findViewById(R.id.eventList);
+
+        DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext());
 
         // Set an OnClickListener for the submit Button
-        submitButton.setOnClickListener(new View.OnClickListener() {
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // Get the values entered in the EditText fields
-                String name = nameEditText.getText().toString();
-                String email = emailEditText.getText().toString();
+                String eventName = eventNameEditText.getText().toString();
+                String eventDesc = eventDescEditText.getText().toString();
+                String eventDate = eventDateEditText.getText().toString();
+                String eventPlace = eventPlaceEditText.getText().toString();
 
-                // TODO: Do something with the name and email values
+                // Do something with the values
+                int nextId = dataBaseHelper.getNextIdEvents();
+                EventModel event = new EventModel(nextId, eventName, eventDesc, eventDate, eventPlace);
+                dataBaseHelper.addOneEvent(event);
 
                 // Clear the EditText fields
-                nameEditText.setText("");
-                emailEditText.setText("");
+                eventNameEditText.setText("");
+                eventDescEditText.setText("");
+                eventDateEditText.setText("");
+                eventPlaceEditText.setText("");
             }
         });
 
-        // Add the form layout to the rootView
-        LinearLayout formContainer = rootView.findViewById(R.id.form_container);
-        formContainer.addView(formView);
+
+        List<EventModel> dbEvents = dataBaseHelper.getEvents();
+        ArrayAdapter<EventModel> eventArrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, dbEvents);
+        eventList = rootView.findViewById(R.id.eventList);
+        eventList.setAdapter(eventArrayAdapter);
 
         return rootView;
     }

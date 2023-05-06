@@ -17,7 +17,10 @@ public class HomeViewModel extends ViewModel {
     public HomeViewModel(MainActivity mainActivity) {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
-        dbEvents = mainActivity.getDbEvents();
+        if (!dbEvents.equals(mainActivity.getDbEvents())){
+            dbEvents = mainActivity.getDbEvents();
+        }
+
 
     }
 

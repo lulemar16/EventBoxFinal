@@ -102,5 +102,6 @@ public class MainActivity extends AppCompatActivity {
     public static UserModel getCurrentUser(){
         return current_user;
     }
+
 }
 
