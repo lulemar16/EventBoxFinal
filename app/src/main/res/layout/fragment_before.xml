@@ -42,11 +42,26 @@
             android:layout_height="wrap_content"
             android:hint="Location of the event" />
 
-        <Button
-            android:id="@+id/button_add"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Event" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Add_Event"
+                android:layout_marginRight="16dp"/>
+
+            <Button
+                android:id="@+id/button_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Refresh_events"
+                android:layout_marginLeft="16dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
