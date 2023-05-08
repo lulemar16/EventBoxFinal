@@ -8,7 +8,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Toast;
-import com.example.eventbox.DataBaseHelper;
 
 import android.os.Bundle;
 
@@ -26,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         // Check if the user is already authenticated
         if (userIsAuthenticated()) {
             launchNewActivity();
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         // If the user is not authenticated, show the login UI
         setContentView(R.layout.activity_main);
+
 
         editTextUsername = findViewById(R.id.editTextUsername);
         editTextPassword = findViewById(R.id.editTextPassword);
