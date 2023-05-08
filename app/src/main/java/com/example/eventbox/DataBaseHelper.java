@@ -32,9 +32,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTableStatement = "CREATE TABLE " + USER_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_USER_NAME + " TEXT, " + COLUMN_USER_EMAIL + " TEXT, " + COLUMN_USER_PASSWORD + " TEXT)";
-        String createTableEvents = "CREATE TABLE " + EVENT_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_EVENT_NAME + " TEXT, " + COLUMN_EVENT_DATE + " TEXT, " + COLUMN_EVENT_DESCRIPTION + " TEXT, " + COLUMN_EVENT_PLACE + " TEXT )" ;
+        String createTableEvents = "CREATE TABLE " + EVENT_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_EVENT_NAME + " TEXT, " + COLUMN_EVENT_DATE + " TEXT, " + COLUMN_EVENT_DESCRIPTION + " TEXT, " + COLUMN_EVENT_PLACE + " TEXT)" ;
 
         db.execSQL(createTableStatement);
+        db.execSQL(createTableEvents);
     }
 
     // called whenever the version number of the database change
@@ -59,6 +60,34 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void addInitialEvents(){
+        EventModel event1 = new EventModel(0,"Bad Bunny Concert",
+                "17/06/2023",
+                "Description of the concert",
+                "WiZink Center");
+        this.addOneEvent(event1);
+        EventModel event2 = new EventModel(1,"Coldplay Concert",
+                "24/05/2023",
+                "Music of the spheres world tour",
+                "Estadi Olímpic Lluís Companys");
+        this.addOneEvent(event2);
+        EventModel event3 = new EventModel(2,"Fórmula 1®: La Exposición",
+                "27/06/2023",
+                "Immersive and interactive experience",
+                "IFEMA Madrid");
+        this.addOneEvent(event3);
+        EventModel event4 = new EventModel(3,"Mentes expertas",
+                "12/06/2023",
+                "Conference of Marian Rojas",
+                "Cines Capitol");
+        this.addOneEvent(event4);
+        EventModel event5 = new EventModel(4,"Mad Cool",
+                "06/07/2023",
+                "Techno, Pop-Rock",
+                "Espacio Mad Cool");
+        this.addOneEvent(event5);
+    }
+
     public boolean addOneEvent(EventModel eventModel){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -74,6 +103,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         } else {
             return true;
         }
+    }
+
+    public int getNextIdEvents(){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // obtener el ID del último evento insertado
+        String query = "SELECT MAX(" + COLUMN_ID + ") FROM " + EVENT_TABLE;
+        Cursor cursor = db.rawQuery(query, null);
+        int maxId = 0;
+        if (cursor.moveToFirst()) {
+            maxId = cursor.getInt(0);
+        }
+        cursor.close();
+        return (maxId+1);
     }
 
 
@@ -145,4 +188,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return returnList;
     }
+
+    public void updateUserPassword(UserModel userModel, String newPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_USER_PASSWORD, newPassword);
+        db.update(USER_TABLE, values, COLUMN_USER_NAME + " = ?", new String[] { userModel.getName() });
+        db.close();
+    }
+
+
 }
