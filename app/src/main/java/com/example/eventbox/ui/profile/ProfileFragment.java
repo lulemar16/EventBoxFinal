@@ -26,6 +26,7 @@ public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private ProfileViewModel profileViewModel;
 
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,7 +81,7 @@ public class ProfileFragment extends Fragment {
                         String confirmPassword = confirmPasswordEditText.getText().toString();
 
 
-                        // TODO: Validate the password fields and change the password
+                        // Validate the password fields and change the password
                         if (!currentPassword.equals(currentUserPassword)) {
                             Toast.makeText(getContext(), "Wrong current password", Toast.LENGTH_SHORT).show();
                         } else if (!newPassword.equals(confirmPassword)) {

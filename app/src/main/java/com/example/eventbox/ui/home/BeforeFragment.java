@@ -20,6 +20,8 @@ import java.util.List;
 public class BeforeFragment extends Fragment {
 
     ListView eventList;
+
+    List<EventModel> dbEvents;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class BeforeFragment extends Fragment {
         EditText eventDateEditText = rootView.findViewById(R.id.edit_text_event_date);
         EditText eventPlaceEditText = rootView.findViewById(R.id.edit_text_event_place);
         Button addButton = rootView.findViewById(R.id.button_add);
+        Button refreshButton = rootView.findViewById(R.id.button_refresh);
 
         //eventList = rootView.findViewById(R.id.eventList);
 
@@ -60,11 +63,22 @@ public class BeforeFragment extends Fragment {
             }
         });
 
+        refreshButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dbEvents = dataBaseHelper.getEvents();
+                ArrayAdapter<EventModel> eventArrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, dbEvents);
+                eventList = rootView.findViewById(R.id.eventList);
+                eventList.setAdapter(eventArrayAdapter);
+            }
+        });
 
-        List<EventModel> dbEvents = dataBaseHelper.getEvents();
+
+        dbEvents = dataBaseHelper.getEvents();
         ArrayAdapter<EventModel> eventArrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, dbEvents);
         eventList = rootView.findViewById(R.id.eventList);
         eventList.setAdapter(eventArrayAdapter);
+
 
         return rootView;
     }

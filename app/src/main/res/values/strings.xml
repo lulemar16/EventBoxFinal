@@ -69,4 +69,6 @@
     <string name="join_us">Join us!</string>
     <string name="menu_profile">Profile</string>
     <string name="Change_password">Change password</string>
+    <string name="Refresh_events">REFRESH EVENTS</string>
+    <string name="Add_Event">ADD EVENT</string>
 </resources>

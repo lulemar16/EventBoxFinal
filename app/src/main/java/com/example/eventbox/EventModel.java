@@ -22,13 +22,10 @@ public class EventModel {
 
     @Override
     public String toString() {
-        return "EventModel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", date=" + date +
-                ", description='" + description + '\'' +
-                ", place='" + place + '\'' +
-                '}';
+        return  name + '\n' +
+                description + '\n' +
+                place + '\n' +
+                date + '\n' ;
     }
 
 
