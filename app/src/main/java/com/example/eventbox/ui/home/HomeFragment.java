@@ -11,7 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.eventbox.DataBaseHelper;
+import com.example.eventbox.MainActivity;
 import com.example.eventbox.R;
+import com.example.eventbox.UserModel;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;

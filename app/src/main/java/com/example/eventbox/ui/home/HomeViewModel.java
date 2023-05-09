@@ -12,14 +12,10 @@ import java.util.List;
 public class HomeViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
-    private List<EventModel> dbEvents;
 
     public HomeViewModel(MainActivity mainActivity) {
         mText = new MutableLiveData<>();
         mText.setValue("This is home fragment");
-        if (!dbEvents.equals(mainActivity.getDbEvents())){
-            dbEvents = mainActivity.getDbEvents();
-        }
 
 
     }

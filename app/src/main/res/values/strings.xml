@@ -75,8 +75,14 @@
     <string name="Refresh_Notes">REFRESH NOTES</string>
     <string name="Notes">Notes</string>
     <string name="nav_notes">Notes</string>
+
     <string name="name_of_the_event">Name of the event</string>
     <string name="date_of_the_event">Date of the event</string>
     <string name="description_of_the_event">Description of the event</string>
     <string name="location_of_the_event">Location of the event</string>
+    <string name="your_user_name">Your username</string>
+    <string name="set">SET</string>
+    <string name="cancel">CANCEL</string>
+    <string name="info_after">Set alarms so you don\'t forget to share your event experience</string>
+
 </resources>

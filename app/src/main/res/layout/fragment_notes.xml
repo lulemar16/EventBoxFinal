@@ -44,7 +44,7 @@
             android:id="@+id/delete_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="*To delete a note click over it and refresh notes." />
+            android:text="*To delete a note click over it." />
 
 
     </LinearLayout>

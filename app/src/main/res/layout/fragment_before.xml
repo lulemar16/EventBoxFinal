@@ -78,16 +78,6 @@
                 android:textColor="@color/white"
                 android:textStyle="italic" />
 
-            <Button
-                android:id="@+id/button_refresh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/Refresh_events"
-                android:layout_marginLeft="16dp"
-                android:background="@drawable/rounded_box"
-                android:padding="10dp"
-                android:textColor="@color/white"
-                android:textStyle="italic" />
 
         </LinearLayout>
 
