@@ -21,6 +21,7 @@ import com.example.eventbox.MainActivity;
 import com.example.eventbox.R;
 import com.example.eventbox.UserModel;
 import com.example.eventbox.databinding.FragmentProfileBinding;
+import com.example.eventbox.ui.notes.NotesFragment;
 
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
@@ -99,6 +100,19 @@ public class ProfileFragment extends Fragment {
                 });
             }
         });
+
+        binding.btnImage.btnToNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Crear una instancia del nuevo fragmento
+                NotesFragment notesFragment = new NotesFragment();
+                // Obtener el NavController del fragmento actual
+                NavHostFragment.findNavController(ProfileFragment.this)
+                        // Navegar al nuevo fragmento
+                        .navigate(R.id.action_profileFragment_to_notesFragment);
+            }
+        });
+
 
         return root;
     }
