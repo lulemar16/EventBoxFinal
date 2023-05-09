@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,9 @@ public class DuringFragment extends Fragment {
         });
 
         photosLayout = rootView.findViewById(R.id.photos_layout); // LinearLayout to hold the photos
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int dpWidth = (int) ((displayMetrics.widthPixels / getResources().getDisplayMetrics().density) * 0.8); // 80% of the device width in dp
 
         cameraLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
@@ -59,7 +63,17 @@ public class DuringFragment extends Fragment {
                 // Create a new ImageView for the new photo and add it to the view
                 ImageView imageView = new ImageView(context);
                 imageView.setImageBitmap(imgBitmap);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                imageView.setPadding(8, 8, 8, 8); // Set the padding between images
                 photosLayout.addView(imageView);
+                // Increase the size of all images in the photosLayout
+                for (int i = 0; i < photosLayout.getChildCount(); i++) {
+                    View childView = photosLayout.getChildAt(i);
+                    ViewGroup.LayoutParams params = childView.getLayoutParams();
+                    params.width = dpWidth;
+                    params.height = dpWidth;
+                    childView.setLayoutParams(params);
+                }
             }
         });
 
