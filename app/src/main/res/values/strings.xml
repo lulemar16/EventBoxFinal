@@ -84,5 +84,6 @@
     <string name="set">SET</string>
     <string name="cancel">CANCEL</string>
     <string name="info_after">Set alarms so you don\'t forget to share your event experience</string>
+    <string name="selected_image">Selected image</string>
 
 </resources>

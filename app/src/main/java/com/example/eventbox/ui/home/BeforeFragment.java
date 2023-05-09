@@ -40,7 +40,7 @@ public class BeforeFragment extends Fragment {
         Button addButton = rootView.findViewById(R.id.button_add);
 
         dataBaseHelper = new DataBaseHelper(getContext());
-
+        dataBaseHelper.addInitialEvents();
 
         // Initialize the ListView
         eventList = rootView.findViewById(R.id.eventList);
