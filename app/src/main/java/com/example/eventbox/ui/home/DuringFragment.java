@@ -70,8 +70,8 @@ public class DuringFragment extends Fragment {
                 for (int i = 0; i < photosLayout.getChildCount(); i++) {
                     View childView = photosLayout.getChildAt(i);
                     ViewGroup.LayoutParams params = childView.getLayoutParams();
-                    params.width = dpWidth;
-                    params.height = dpWidth;
+                    params.width = dpWidth*3;
+                    params.height = dpWidth*3;
                     childView.setLayoutParams(params);
                 }
             }
