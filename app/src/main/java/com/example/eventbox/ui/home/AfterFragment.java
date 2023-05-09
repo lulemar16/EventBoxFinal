@@ -76,6 +76,7 @@ public class AfterFragment extends Fragment implements View.OnClickListener {
                 alarmManager.cancel(pendingIntent);
                 Toast.makeText(context, "Canceled.", Toast.LENGTH_SHORT).show();
                 break;
+
         }
 
     }
