@@ -43,6 +43,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(createTableNotes);
     }
 
+
     // called whenever the version number of the database change
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
