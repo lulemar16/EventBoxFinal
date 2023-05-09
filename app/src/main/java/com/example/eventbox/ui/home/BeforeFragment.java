@@ -38,9 +38,9 @@ public class BeforeFragment extends Fragment {
         EditText eventDateEditText = rootView.findViewById(R.id.edit_text_event_date);
         EditText eventPlaceEditText = rootView.findViewById(R.id.edit_text_event_place);
         Button addButton = rootView.findViewById(R.id.button_add);
-        Button refreshButton = rootView.findViewById(R.id.button_refresh);
 
         dataBaseHelper = new DataBaseHelper(getContext());
+
 
         // Initialize the ListView
         eventList = rootView.findViewById(R.id.eventList);
@@ -100,6 +100,7 @@ public class BeforeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        dbEvents.clear();
         loadEventsFromDatabase();
     }
 }

@@ -1,7 +1,12 @@
 package com.example.eventbox;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Build;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,12 +26,15 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonSignUp;
     private List<EventModel> dbEvents;
     public static UserModel current_user;
+    private BatteryReceiver batteryReceiver = new BatteryReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        // BroadcastReceiver
+        IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        registerReceiver(batteryReceiver, filter);
 
         // Check if the user is already authenticated
         if (userIsAuthenticated()) {
@@ -58,11 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
                 DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this);
                 List<UserModel> dbUsers = dataBaseHelper.getEveryone();
-                dataBaseHelper.addInitialEvents();
-                dbEvents = dataBaseHelper.getEvents();
 
                 for (UserModel user : dbUsers) {
-                    if (user.getName().equals(username) && user.getPassword().equals(password)) {
+                    if (user.getName().equals(username) && user.getPassword().equals(password))  {
                         // credentials are correct, do something
                         current_user = user;
                         Toast.makeText(MainActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
@@ -83,6 +89,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    "default",
+                    "EventBox Channel",
+                    NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription("EventBox Reminder Channel");
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
 
     }
 
@@ -98,8 +114,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public List<EventModel> getDbEvents() {
-        return dbEvents;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // unregister BroadcastReceiver
+        unregisterReceiver(batteryReceiver);
     }
 
     public static UserModel getCurrentUser(){
