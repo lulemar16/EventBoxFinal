@@ -3,32 +3,24 @@ package com.example.eventbox.ui.home;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
-import androidx.annotation.Nullable;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.eventbox.R;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DuringFragment extends Fragment {
 
@@ -37,7 +29,8 @@ public class DuringFragment extends Fragment {
     private static final int REQUEST_PERMISSION_WRITE_STORAGE = 200;
     private Context context;
     ImageButton btnCamera;
-    ImageView imgCamera;
+    LinearLayout photosLayout;
+    List<Bitmap> photosList = new ArrayList<>(); // List to store the photos taken
     ActivityResultLauncher<Intent> cameraLauncher;
 
     @Override
@@ -55,12 +48,18 @@ public class DuringFragment extends Fragment {
             }
         });
 
-        imgCamera = rootView.findViewById(R.id.img_camera); // Obtener referencia del ImageView
+        photosLayout = rootView.findViewById(R.id.photos_layout); // LinearLayout to hold the photos
+
         cameraLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == Activity.RESULT_OK) {
                 Bundle extras = result.getData().getExtras();
                 Bitmap imgBitmap = (Bitmap) extras.get("data");
-                imgCamera.setImageBitmap(imgBitmap); // Actualizar el ImageView con la imagen capturada
+                photosList.add(imgBitmap); // Add the new photo to the list
+
+                // Create a new ImageView for the new photo and add it to the view
+                ImageView imageView = new ImageView(context);
+                imageView.setImageBitmap(imgBitmap);
+                photosLayout.addView(imageView);
             }
         });
 

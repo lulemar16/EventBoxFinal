@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <!-- Form Container -->
     <LinearLayout
@@ -21,32 +21,75 @@
         <EditText
             android:id="@+id/edit_text_event_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Name of the event" />
+            android:layout_height="50dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rounded_box"
+            android:hint="@string/name_of_the_event"
+            android:padding="10dp"
+            android:textColor="#303030"
+            android:textStyle="italic" />
 
         <EditText
             android:id="@+id/edit_text_event_description"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Description of the event" />
+            android:layout_height="50dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rounded_box"
+            android:hint="@string/description_of_the_event"
+            android:padding="10dp"
+            android:textColor="#303030"
+            android:textStyle="italic" />
 
         <EditText
             android:id="@+id/edit_text_event_date"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Date of the event" />
+            android:layout_height="50dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rounded_box"
+            android:hint="@string/date_of_the_event"
+            android:padding="10dp"
+            android:textColor="#303030"
+            android:textStyle="italic"/>
 
         <EditText
             android:id="@+id/edit_text_event_place"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Location of the event" />
+            android:layout_height="50dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rounded_box"
+            android:hint="@string/location_of_the_event"
+            android:padding="10dp"
+            android:textColor="#303030"
+            android:textStyle="italic"/>
 
-        <Button
-            android:id="@+id/button_add"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add Event" />
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Add_Event"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/rounded_box"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textStyle="italic" />
+
+            <Button
+                android:id="@+id/button_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Refresh_events"
+                android:layout_marginLeft="16dp"
+                android:background="@drawable/rounded_box"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textStyle="italic" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -54,7 +97,13 @@
     <ListView
         android:id="@+id/eventList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp"
+        android:padding="10dp"
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
+
 
 </LinearLayout>
 

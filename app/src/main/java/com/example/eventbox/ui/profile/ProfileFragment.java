@@ -21,10 +21,12 @@ import com.example.eventbox.MainActivity;
 import com.example.eventbox.R;
 import com.example.eventbox.UserModel;
 import com.example.eventbox.databinding.FragmentProfileBinding;
+import com.example.eventbox.ui.notes.NotesFragment;
 
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private ProfileViewModel profileViewModel;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -80,7 +82,7 @@ public class ProfileFragment extends Fragment {
                         String confirmPassword = confirmPasswordEditText.getText().toString();
 
 
-                        // TODO: Validate the password fields and change the password
+                        // Validate the password fields and change the password
                         if (!currentPassword.equals(currentUserPassword)) {
                             Toast.makeText(getContext(), "Wrong current password", Toast.LENGTH_SHORT).show();
                         } else if (!newPassword.equals(confirmPassword)) {
@@ -98,6 +100,19 @@ public class ProfileFragment extends Fragment {
                 });
             }
         });
+
+        binding.btnImage.btnToNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Crear una instancia del nuevo fragmento
+                NotesFragment notesFragment = new NotesFragment();
+                // Obtener el NavController del fragmento actual
+                NavHostFragment.findNavController(ProfileFragment.this)
+                        // Navegar al nuevo fragmento
+                        .navigate(R.id.action_profileFragment_to_notesFragment);
+            }
+        });
+
 
         return root;
     }
