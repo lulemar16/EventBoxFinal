@@ -24,7 +24,7 @@
             android:layout_height="50dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/rounded_box"
-            android:hint="Name of the event"
+            android:hint="@string/name_of_the_event"
             android:padding="10dp"
             android:textColor="#303030"
             android:textStyle="italic" />
@@ -35,7 +35,7 @@
             android:layout_height="50dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/rounded_box"
-            android:hint="Description of the event"
+            android:hint="@string/description_of_the_event"
             android:padding="10dp"
             android:textColor="#303030"
             android:textStyle="italic" />
@@ -46,7 +46,7 @@
             android:layout_height="50dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/rounded_box"
-            android:hint="Date of the event"
+            android:hint="@string/date_of_the_event"
             android:padding="10dp"
             android:textColor="#303030"
             android:textStyle="italic"/>
@@ -57,7 +57,7 @@
             android:layout_height="50dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/rounded_box"
-            android:hint="Location of the event"
+            android:hint="@string/location_of_the_event"
             android:padding="10dp"
             android:textColor="#303030"
             android:textStyle="italic"/>
