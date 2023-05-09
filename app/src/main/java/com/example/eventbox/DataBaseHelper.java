@@ -23,6 +23,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_EVENT_DESCRIPTION = "COLUMN_EVENT_DESCRIPTION";
     public static final String COLUMN_EVENT_PLACE = "COLUMN_EVENT_PLACE";
     public static final String COLUMN_EVENT_DATE = "COLUMN_EVENT_DATE";
+    public static final String COLUMN_NOTE = "COLUMN_NOTE";
+    public static final String NOTES_TABLE = "NOTES_TABLE";
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, "EventBox.db", null, 1);
@@ -33,9 +35,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String createTableStatement = "CREATE TABLE " + USER_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_USER_NAME + " TEXT, " + COLUMN_USER_EMAIL + " TEXT, " + COLUMN_USER_PASSWORD + " TEXT)";
         String createTableEvents = "CREATE TABLE " + EVENT_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_EVENT_NAME + " TEXT, " + COLUMN_EVENT_DATE + " TEXT, " + COLUMN_EVENT_DESCRIPTION + " TEXT, " + COLUMN_EVENT_PLACE + " TEXT)" ;
+        String createTableNotes = "CREATE TABLE " + NOTES_TABLE + " (" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_NOTE + " TEXT)" ;
+
 
         db.execSQL(createTableStatement);
         db.execSQL(createTableEvents);
+        db.execSQL(createTableNotes);
     }
 
     // called whenever the version number of the database change
@@ -53,6 +58,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_USER_PASSWORD, userModel.getPassword());
 
         long insert = db.insert(USER_TABLE, null, cv);
+        if (insert == -1){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+        public boolean addOneNote(NotesModel notesModel){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(COLUMN_NOTE, notesModel.getNote());
+
+        long insert = db.insert(NOTES_TABLE, null, cv);
         if (insert == -1){
             return false;
         } else {
@@ -110,6 +129,20 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         // obtener el ID del último evento insertado
         String query = "SELECT MAX(" + COLUMN_ID + ") FROM " + EVENT_TABLE;
+        Cursor cursor = db.rawQuery(query, null);
+        int maxId = 0;
+        if (cursor.moveToFirst()) {
+            maxId = cursor.getInt(0);
+        }
+        cursor.close();
+        return (maxId+1);
+    }
+
+    public int getNextIdNotes(){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // obtener el ID del último evento insertado
+        String query = "SELECT MAX(" + COLUMN_ID + ") FROM " + NOTES_TABLE;
         Cursor cursor = db.rawQuery(query, null);
         int maxId = 0;
         if (cursor.moveToFirst()) {
@@ -189,12 +222,57 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return returnList;
     }
 
+    public List<NotesModel> getAllNotes(){
+
+        List<NotesModel> returnList = new ArrayList<>();
+
+        // get data from the database
+
+        String queryString = "SELECT * FROM " + NOTES_TABLE;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+
+        if (cursor.moveToFirst()) {
+            // loop through the results
+            do {
+                int noteID = cursor.getInt(0);
+                String noteNote = cursor.getString(1);
+
+                NotesModel newNote = new NotesModel(noteID, noteNote);
+                returnList.add(newNote);
+
+            }while (cursor.moveToNext());
+
+        } else {
+            // failure. do not do anything
+        }
+        // close the cursor and the db when done
+        cursor.close();
+        db.close();
+        return returnList;
+    }
+
     public void updateUserPassword(UserModel userModel, String newPassword) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_USER_PASSWORD, newPassword);
         db.update(USER_TABLE, values, COLUMN_USER_NAME + " = ?", new String[] { userModel.getName() });
         db.close();
+    }
+
+    public boolean deleteOneNote (int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM " + NOTES_TABLE + " WHERE " + COLUMN_ID + " = " + id;
+        Cursor cursor = db.rawQuery(queryString, null);
+        if(cursor.moveToFirst()){
+            cursor.close();
+            return true;
+        } else {
+            cursor.close();
+            return false;
+        }
     }
 
 

@@ -71,4 +71,8 @@
     <string name="Change_password">Change password</string>
     <string name="Refresh_events">REFRESH EVENTS</string>
     <string name="Add_Event">ADD EVENT</string>
+    <string name="Add_Note">ADD NOTE</string>
+    <string name="Refresh_Notes">REFRESH NOTES</string>
+    <string name="Notes">Notes</string>
+    <string name="nav_notes">Notes</string>
 </resources>

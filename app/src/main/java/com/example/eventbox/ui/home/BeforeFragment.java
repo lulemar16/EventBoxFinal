@@ -15,6 +15,7 @@ import com.example.eventbox.DataBaseHelper;
 import com.example.eventbox.EventModel;
 import com.example.eventbox.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BeforeFragment extends Fragment {
@@ -22,6 +23,9 @@ public class BeforeFragment extends Fragment {
     ListView eventList;
 
     List<EventModel> dbEvents;
+    DataBaseHelper dataBaseHelper;
+    ArrayAdapter<EventModel> eventArrayAdapter;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -36,9 +40,15 @@ public class BeforeFragment extends Fragment {
         Button addButton = rootView.findViewById(R.id.button_add);
         Button refreshButton = rootView.findViewById(R.id.button_refresh);
 
-        //eventList = rootView.findViewById(R.id.eventList);
+        dataBaseHelper = new DataBaseHelper(getContext());
 
-        DataBaseHelper dataBaseHelper = new DataBaseHelper(getContext());
+        // Initialize the ListView
+        eventList = rootView.findViewById(R.id.eventList);
+        dbEvents = new ArrayList<>();
+
+        // Set up the adapter for the ListView
+        eventArrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, dbEvents);
+        eventList.setAdapter(eventArrayAdapter);
 
         // Set an OnClickListener for the submit Button
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -53,34 +63,44 @@ public class BeforeFragment extends Fragment {
                 // Do something with the values
                 int nextId = dataBaseHelper.getNextIdEvents();
                 EventModel event = new EventModel(nextId, eventName, eventDesc, eventDate, eventPlace);
-                dataBaseHelper.addOneEvent(event);
+
 
                 // Clear the EditText fields
                 eventNameEditText.setText("");
                 eventDescEditText.setText("");
                 eventDateEditText.setText("");
                 eventPlaceEditText.setText("");
+
+                // Add the new note to the ListView and refresh it
+                dbEvents.add(event);
+                eventArrayAdapter.notifyDataSetChanged();
             }
         });
-
-        refreshButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dbEvents = dataBaseHelper.getEvents();
-                ArrayAdapter<EventModel> eventArrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, dbEvents);
-                eventList = rootView.findViewById(R.id.eventList);
-                eventList.setAdapter(eventArrayAdapter);
-            }
-        });
-
-
-        dbEvents = dataBaseHelper.getEvents();
-        ArrayAdapter<EventModel> eventArrayAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, dbEvents);
-        eventList = rootView.findViewById(R.id.eventList);
-        eventList.setAdapter(eventArrayAdapter);
-
-
         return rootView;
     }
 
+
+    // Load the notes from the database and display them in the ListView
+    private void loadEventsFromDatabase() {
+        dbEvents.clear();
+        dbEvents.addAll(dataBaseHelper.getEvents());
+        eventArrayAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        // Save the notes in the ListView to the database
+        for (EventModel event : dbEvents) {
+            dataBaseHelper.addOneEvent(event);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadEventsFromDatabase();
+    }
 }
+
